@@ -8,6 +8,7 @@ $codeErr = $nameErr = $categoryErr = $priceErr = $imageErr = '';
 
 $uploadDir = '../uploads/';
 $allowedType = ['jpg', 'jpeg', 'png'];
+$maxFileSize = 5 * 1024 * 1024;
 
 $productObj = new ProductImage();
 
@@ -40,6 +41,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $priceErr = 'Price should be a number.';
     } else if ($price < 1){
         $priceErr = 'Price must be greater than 0.';
+    } else if ($_FILES['product_image']['size'] > $maxFileSize) {
+        $imageErr = 'Image file size must not exceed 5MB.';
     }
 
     $imageFileType = strtolower(pathinfo($image, PATHINFO_EXTENSION));
